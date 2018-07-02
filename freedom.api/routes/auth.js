@@ -1,12 +1,10 @@
 // Authentication Controller
-import passport from 'passport';
-import express from 'express';
-import loginService from '../services/login-service';
-import registrationService from '../services/registration-service';
+import { apiFactory } from '../extensions/router-extensions';
+import { loginService, registrationService } from '../services/index';
 
-const router = express.Router();
+const api = apiFactory.create();
 
-router.post('/login', function(req, res, next) {
+api.post('/login', false, function(req, res, next) {
     const loginDto = {
         username: req.body.username,
         password: req.body.password
@@ -15,11 +13,18 @@ router.post('/login', function(req, res, next) {
     loginService.login(loginDto)
         .then(jwt => res.status(200).json(jwt),
             // Do not give consumer or client detailed information to crack passwords
-            err => res.status(401).json({ errorType: 'Login Failed', errorMessage: 'Invalid username or password!'})
-        );
+            err => {
+                //console.error(err);
+                if (err.statusCode === 401) {
+                    res.status(401).json({ errorType: err.errorType, errorMessage: err.errorMessage});
+                }
+                else {
+                    res.status(401).json({ errorType: 'Unauthorized', errorMessage: 'Invalid username or password!'});
+                }                
+            });
 });
 
-router.post('/register', function(req, res, next) {
+api.post('/register', false, function(req, res, next) {
     const newUserDto = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -30,13 +35,16 @@ router.post('/register', function(req, res, next) {
 
     registrationService.registerNewUser(newUserDto)
         .then(result => res.status(201).send(null),
-        err => res.status(err.statusCode).json({ errorType: err.errorType, errorMessage: err.errorMessage})
-    );
+        err => {
+            //console.error(err);
+            res.status(err.statusCode).json({ errorType: err.errorType, errorMessage: err.errorMessage})
+        });
 });
 
+
 // Example
-router.get('/secret', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+api.get('/secret', true, (req, res, next) => {
     res.status(200).send("Secret!");
 });
 
-export default router;
+export default api;

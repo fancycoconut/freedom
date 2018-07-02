@@ -9,7 +9,13 @@ const UserSchema = new Schema({
     dateOfBirth: { type: Date, required: false },
 
     salt: { type: String, required: true },
-    passwordHash: { type: String, required: true }
+    passwordHash: { type: String, required: true },
+    loginAttempts: { type: String, required: false, default: 0 },
+    lastFailedLoginAttemptTime: { type: Date, required: false },
+
+    lastLoginTime: { type: Date, required: false },
+
+    deleted: { type: Boolean, required: true, default: false }
 });
 
-export default mongoose.model('User', UserSchema);
+export const User = mongoose.model('User', UserSchema);

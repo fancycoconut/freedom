@@ -3,22 +3,25 @@
 // Import dependencies required to set up http server
 import express from 'express';
 
-
-import config from './config';
-import { db, auth, server, routing } from './infrastructure/index';
+import { config } from './config';
+import { db, auth, server, routing, crypto } from './infrastructure/index';
 
 const app = express();
 
+// Calculate bcrypt salt rounds
+//crypto.calculateOptimalSaltRounds();
+
 // Configure our web server
-server.configureServices(app);
+app.use(server.allowCrossDomain());
+app.use(server.configureServices());
+app.use(server.configureSecurity());
 //app.use(express.static(path.join(__dirname, 'public')));
 
-auth.useJwtAuthentication(app);
+app.use(auth.setupJwtAuthentication());
 
 // Setup MongoDB
-db.useMongo();
+app.use(db.setupMongo());
+app.use(routing.configureRoutes());
 
-routing.configureRoutes(app);
-
-app.listen(process.env.PORT || config.localhost_port, () => console.log('freedom is listening...'));
-//app.listen(process.env.PORT || config.port, () => console.log('freedom is listening...'));
+app.listen(process.env.PORT || config.localhost_port, () => console.log('Freedom is listening...'));
+//app.listen(process.env.PORT || config.port, () => console.log('Freedom is listening...'));

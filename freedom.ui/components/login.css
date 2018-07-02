@@ -1,0 +1,23 @@
+/*
+    Login Form Design
+    Copyright (c) 2018 Freedom
+*/
+
+body > div,
+body > div > div,
+body > div > div > div.login-form {
+    height: 100%;
+}
+
+.login-form-grid {
+    height: 100%;
+    text-align: center;
+}
+
+.login-form-column {
+    max-width: 450px;
+}
+
+.login-err-msg--left {
+    text-align: left;
+}

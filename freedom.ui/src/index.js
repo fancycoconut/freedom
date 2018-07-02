@@ -2,15 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import styles from './styles/freedom.css';
-import Page from '../components/page';
-
-class App extends React.Component {
-    render() {
-        return <Page />;        
-    }
-}
+import App from './app';
 
 ReactDOM.render(
-    <App />,
-    document.getElementById('root')
+    <App />, document.getElementById('root')
 );

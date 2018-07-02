@@ -42,6 +42,14 @@ https://www.robinwieruch.de/minimal-react-webpack-babel-setup/
 https://medium.com/@grrowl/testing-react-with-jasmine-and-karma-using-webpack-and-babel-18fc268f066a
 
 ## MongoDB
+https://gist.github.com/subfuzion/9630872
+https://alicoding.com/how-to-start-mongodb-automatically-when-starting-your-mac-os-x/
+Auto launch mongodb on startup on mac:
+ln -sfv /usr/local/opt/mongodb/*.plist ~/Library/LaunchAgents
+ brew services list | grep mongodb
+$ brew services start mongodb
+$ brew services stop mongodb
+
 https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 
 http://mongoosejs.com/docs/

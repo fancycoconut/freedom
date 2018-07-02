@@ -4,17 +4,20 @@
   "description": "A capability enabling platform",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules",
-    "start": "npm run build && node dist/app.js"
+    "test": "npm run build && babel-node spec/run.js",
+    "build": "rimraf build/ && babel ./ --out-dir build/ --ignore ./node_modules",
+    "start": "npm run build && node build/app.js"
   },
   "author": "Kawai Wong",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^2.0.1",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-sanitized": "^0.5.1",
+    "helmet": "^3.12.1",
     "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
     "mongoose": "^5.1.4",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
@@ -25,6 +28,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "jasmine": "^3.1.0",
     "rimraf": "^2.6.2"
   }
 }
